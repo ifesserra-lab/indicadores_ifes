@@ -5,7 +5,7 @@ import { aplicarVisaoGeral, aplicarVisaoPilar, aplicarVisaoDetalhe } from './apl
 import { computarVisaoMemoria, type VisaoMemoria } from './memoria';
 import { aplicarMemoria } from './aplicar-memoria';
 import { PILARES } from '../data/indicadores';
-import { obterTemaSalvo, aplicarTema } from './tema';
+import { obterTemaSalvo, aplicarTema, proximoTema } from './tema';
 import { criarIndiceBusca, pesquisarIndicadores } from './busca';
 import { inicializarRaiox, recarregarRaioxSeAberto } from './raiox-cliente';
 
@@ -274,10 +274,10 @@ export function inicializarContextoCliente(): void {
 
     botoesTema.forEach((btn) => {
       btn.addEventListener('click', () => {
-        const modo = btn.getAttribute('data-btn-tema');
-        if (modo === 'claro' || modo === 'escuro') {
-          aplicarTema(document, modo);
-        }
+        const atual =
+          (document.documentElement.getAttribute('data-theme') as 'claro' | 'escuro' | null) ||
+          'claro';
+        aplicarTema(document, proximoTema(atual));
       });
     });
   }

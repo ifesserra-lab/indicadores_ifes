@@ -81,15 +81,16 @@ describe('Gestão de Tema Claro / Escuro (User Story 4)', () => {
     expect(elBtnEscuro.getAttribute('aria-pressed')).toBe('false');
   });
 
-  it('SeletorTema renderiza 2 botões distintos para tema claro (sol) e tema escuro (lua)', async () => {
+  it('SeletorTema renderiza um único botão de alternância com os ícones de sol e lua', async () => {
     const container = await AstroContainer.create();
     const html = await container.renderToString(SeletorTema);
 
-    expect(html).toContain('data-btn-tema="claro"');
-    expect(html).toContain('data-btn-tema="escuro"');
-    expect(html).toContain('<svg');
-    expect(html).toMatch(/aria-label="Ativar tema claro"/);
-    expect(html).toMatch(/aria-label="Ativar tema escuro"/);
+    expect(html).toContain('data-btn-tema="alternar"');
+    expect(html).not.toContain('data-btn-tema="claro"');
+    expect(html).not.toContain('data-btn-tema="escuro"');
+    expect((html.match(/<button/g) ?? []).length).toBe(1);
+    expect((html.match(/<svg/g) ?? []).length).toBe(2);
+    expect(html).toMatch(/aria-label="Alternar tema visual"/);
     expect(html).not.toContain('icone-auto');
   });
 
