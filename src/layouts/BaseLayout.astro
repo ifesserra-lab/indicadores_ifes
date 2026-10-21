@@ -474,13 +474,16 @@ const fontFaceCss = pesos
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1.5rem;
+    gap: 1.25rem;
   }
 
+  /* `flex-shrink: 0` impede que a marca encolha abaixo do conteúdo: sem ele o
+     selo "Indicadores IFES" (nowrap) transbordava por cima de "Visão geral". */
   .marca-bloco {
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    flex-shrink: 0;
   }
 
   .painel-badge {
@@ -492,6 +495,7 @@ const fontFaceCss = pesos
     color: var(--color-emerald-700);
     letter-spacing: 0.02em;
     white-space: nowrap;
+    display: none;
   }
 
   .nav-pilares {
@@ -571,19 +575,31 @@ const fontFaceCss = pesos
     margin-bottom: 0.25rem;
   }
 
+  /*
+   * Os itens do cabeçalho entram em degraus conforme cabem na largura; o que
+   * ainda não cabe continua disponível na gaveta (botão de menu, sempre
+   * visível). Com tudo exposto antes da hora, a marca era espremida e o selo
+   * "Indicadores IFES" colidia com a aba "Visão geral".
+   */
   @media (min-width: 768px) {
     .nav-pilares {
-      display: flex;
-    }
-    .cabecalho-filtros {
       display: flex;
     }
   }
 
   @media (min-width: 990px) {
+    .cabecalho-filtros {
+      display: flex;
+    }
+  }
+
+  @media (min-width: 1200px) {
     .cabecalho-busca {
       display: flex;
       align-items: center;
+    }
+    .painel-badge {
+      display: inline-block;
     }
   }
 
@@ -674,6 +690,7 @@ const fontFaceCss = pesos
     padding: 0.45rem 0.8rem;
     font-size: 0.9rem;
     font-weight: 600;
+    white-space: nowrap;
     text-decoration: none;
     color: var(--color-muted);
     border-radius: 6px;
